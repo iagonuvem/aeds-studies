@@ -175,3 +175,18 @@ No* remover(No* lista, int info, int new_info){
     return l; // Retorna a lista atualizada
 }
 ```
+
+# Listas duplamente encadeadas
+
+A diferença básica entre a lista simplesmente encadeada e duplamente encadeada, é que Na lista Simplesmente encadeada temos apenas o endereço de memória do próximo nó como referência e na Duplamente encadeada temos o endereço do próximo e o anterior, logo a definição da estrutura apenas se altera um pouco.
+
+### Estrutura de lista duplamente encadeada
+
+```c
+struct no {
+	struct no* prox; // Endereço de memória do nó anterior
+    int info; // Informação do nó
+    struct no* prox; // Endereço de memória do próximo nó
+};
+typedef struct no No; // Define um apelido para a estrutura
+```
