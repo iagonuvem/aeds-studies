@@ -184,8 +184,8 @@ A diferença básica entre a lista simplesmente encadeada e duplamente encadeada
 
 ```c
 struct no {
-	struct no* prox; // Endereço de memória do nó anterior
     int info; // Informação do nó
+    struct no* ant; // Endereço de memória do nó anterior
     struct no* prox; // Endereço de memória do próximo nó
 };
 typedef struct no No; // Define um apelido para a estrutura
