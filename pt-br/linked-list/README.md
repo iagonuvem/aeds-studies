@@ -190,3 +190,91 @@ struct no {
 };
 typedef struct no No; // Define um apelido para a estrutura
 ```
+
+As operações com listas duplamente encadeadas se diferenciam apenas nas funções de **Remoção** e **Inserção**.
+
+1. ** Inserir um novo nó em lista duplamente encadeada **
+
+```c
+No* inserir(No* l, int info){
+    // Aloca o espaço para um novo nó
+    No* novo = (No*) malloc(sizeof(No));
+
+    novo->info = info; // seta a informação do nó
+   
+    /**
+    * Como a lista é duplamente encadeada, e o nó é sempre inserido no
+    * início, o anterior ao novo nó é NULO
+    */
+    novo->ant = NULL 
+    
+    // A referencia de próximo nó do novo criado é igual ao de listas simples
+    novo->prox = l;
+
+    /**
+    * A diferença basica está na linha a seguir, precisamos fazer a 'antiga'
+    * cabeça da lista, ter como referencia de nó anterior o novo
+    * nó criado, visto que ele é 'colocado na frente'.
+    */
+    l->ant = novo;
+
+    l = novo; // Cabeça da lista passa a ser o novo nó criado
+
+    return l;
+}
+```
+
+2. ** Remover um nó em lista duplamente encadeada**
+
+```c
+No* remove(No* l, int info){
+    No* p = NULL;
+
+    // Percorre a lista em busca de alguma ocorrencia do valor passado
+    for(p = l; p != NULL; p = p->prox){ 
+        if(p->info == info){ // Se encontrar a informação igual
+            /**
+            * Paramos a repetição, pois 'p' já aponta para o nó com o 
+            * valor que a função requer.
+            */
+            break;
+        }
+    }
+
+    /**
+    * Agora tratamos as possibilidade de 'p'...
+    */
+
+    /**
+    * Se 'p' for nulo, significa toda a lista foi percorrida e não foi
+    * encontrado nenhuma ocorrencia do valor, então...
+    */
+    if(p == null){
+        return l; // retorna a própria lista, sem nenhuma alteração
+    }
+    else{ // Caso tenha encontrado alguma ocorrencia...
+
+        /**
+        * Nas proximas 4 linhas de código referenciamos o 
+        * PRÓXIMO DO ANTERIOR ao 'p' como o próximo de 'p', e o ANTERIOR DO 
+        * PRÓXIMO como o anterior de 'p'. Ao fazer isso, nós 'pulamos' o nó
+        * 'p' da referencia da lista, e ja podemos libera-lo sem maiores 
+        * preocupações.
+        */
+        p->ant->prox = p->prox;
+
+        /** 
+        * Precisamos ter certeza que o elemento que estamos removendo não é o
+        * último, para não dar erro, visto que não podemos setar um atributo
+        * de 'NULL'. 
+        */
+        if(p->prox != NULL){ 
+            p->prox->ant = p->ant; 
+        }
+            
+    }
+
+    // libera o nó 
+    free(p);
+}
+```

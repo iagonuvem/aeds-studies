@@ -7,7 +7,7 @@ struct no{
 typedef struct no No;
 
 struct pilha{
-	struct no* topo;
+	struct No* topo;
 };
 typedef struct pilha Pilha;
 
@@ -24,13 +24,15 @@ void popn(Pilha* p, int n){
 }
 
 
-Pilha* pop(Pilha* p){
+int pop(Pilha* p){
 	Pilha* aux = criar();
+	int v;
 	aux->topo = p->topo->prox;
+	v = p->topo->info;
 	free(p->topo);
 	p = aux;
 
-	return p;
+	return v;
 }
 
 Pilha* push(Pilha* p, int info){
@@ -42,7 +44,7 @@ Pilha* push(Pilha* p, int info){
 	return p;
 }
 
-Pilha* criar(){
+Pilha* criar(void){
 	Pilha* p = (Pilha*) malloc(sizeof(Pilha));
 	p->topo = NULL;
 	return p;
@@ -53,7 +55,7 @@ void imprime(Pilha* p){
 	while(!vazia(p)){ // 'Percorre' a pilha enquanto ela tiver elementos
 		int a = pop(p); // Remove o topo da pilha e armazena o topo em 'v'
 		printf("%d\n", a); // imprime 
-		push(aux,a); // coloca o topo da pilha 'p' na pilha auxiliar
+		push(aux,a); // coloca o topo da pilha 'p' na pilha auxiliar		aux->topo = pop(p);
 	}
 
 	while(!vazia(aux)){
