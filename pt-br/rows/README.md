@@ -115,24 +115,28 @@ int remover(Fila* f) {
 
 ```c
 void imprimir(Fila* f) {
+	/**
+	* Aloca espaço para uma fila auxiliar, pois sabendo que só podemos acessar
+	* o inicio e fim de uma lista, temos que imprimir e retirar, e armazenar
+	* os valores retirados em uma nova fila para não "perdermos" a fila.
+	*/
 	Fila* aux = (Fila*) malloc(sizeof(Fila));
-	No* q = f->ini;
 
-	while(q != NULL){
+	while(f->ini != NULL){
 		/**
 		* Cria um nó e iguala ele ao 'segundo da fila', para não perder
 		* a referencia, fazendo isso podemos agora podemos remover o primeiro
 		* sem maiores preocupações.
 		*/
-		No* t = q->prox;
+		No* t = f->ini->prox;
 
 		// Imprime a informação
-		printf("%d" , q->info);
+		printf("%d" , f->ini->info);
 
 		/**
 		* Coloca o inicio da fila principal no final da fila auxiliar
 		*/
-		aux->fim = q;
+		aux->fim = f->ini;
 
 		/**
 		* Se o inicio da lista auxiliar for vazio (ainda não entrou
@@ -144,14 +148,14 @@ void imprimir(Fila* f) {
 		}
 
 		// remove o inicio
-		free(q);
+		free(f->ini);
 
 		// Seta o novo primeiro da fila como o auxiliar(antigo segundo)
-		q = aux->ini;
+		f->ini = aux->ini;
 
 		// Se chegarmos ao ultimo elemento
 		if(aux->ini == NULL){
-			q = NULL; // Seta o inicio como NULL
+			f->ini = NULL; // Seta o inicio como NULL
 			f->fim = NULL; // Seta o final como NULL
 		}
 		
