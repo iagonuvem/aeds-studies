@@ -162,7 +162,7 @@ void imprimir(Fila* f) {
 	}
 
 	/**
-	* Agora, ja percorremos toda a fila imprimindo as informações e
+	* Ja percorremos toda a fila imprimindo as informações e
 	* armazenando em uma fila auxiliar, agora precisamos voltar tudo para
 	* a fila principal utilizando o processo de inserção explicado acima e 
 	* depois liberar a fila auxiliar.
@@ -183,5 +183,8 @@ void imprimir(Fila* f) {
 		free(aux->ini);
 		aux->ini = t;
 	}
+
+	// Libera a fila auxiliar
+	free(aux);
 }
 ```
